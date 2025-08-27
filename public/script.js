@@ -259,7 +259,8 @@ const SUPPORTED_CURRENCIES = {
     NOK: { locale: 'nb-NO', symbol: 'kr' },
     DKK: { locale: 'da-DK', symbol: 'kr' },
     IDR: { locale: 'id-ID', symbol: 'Rp' },
-    PHP: { locale: 'fil-PH', symbol: '₱' }
+    PHP: { locale: 'fil-PH', symbol: '₱' },
+    PKR: { locale: 'en-PK', symbol: 'Rs' }
 };
 
 let currentCurrency = 'USD'; // Default currency
