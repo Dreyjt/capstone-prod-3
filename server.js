@@ -977,7 +977,7 @@ const SUPPORTED_CURRENCIES = [
     'CAD', 'CHF', 'CNY', 'HKD', 'NZD',
     'MXN', 'RUB', 'SGD', 'KRW', 'INR',
     'BRL', 'ZAR', 'TRY', 'PLN', 'SEK',
-    'NOK', 'DKK', 'IDR', 'PHP'
+    'NOK', 'DKK', 'IDR', 'PHP', 'PKR'
 ];
 
 // Get current currency setting
