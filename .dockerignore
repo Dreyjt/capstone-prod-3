@@ -26,6 +26,8 @@ Thumbs.db
 # Docker
 Dockerfile
 .dockerignore
+docker-compose.yml
+monitoring
 
 # Data
 data/
