@@ -41,3 +41,8 @@ nodemon.json
 README.md
 LICENSE
 *.md
+
+
+#keypair 
+dumbbudget-key.pub
+dumbbudget-key

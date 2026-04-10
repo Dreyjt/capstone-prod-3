@@ -140,3 +140,12 @@ data/transactions.json
 /public/logo.*
 /public/assets/logo.*
 /public/assets/*manifest.json
+
+#keypair 
+dumbbudget-key.pub
+dumbbudget-key
+
+#terraform
+*.tfstate
+*.tfstate.*
+**/.terraform/*
