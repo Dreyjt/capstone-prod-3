@@ -77,6 +77,13 @@ resource "aws_security_group" "sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  # Optional: expose node_exporter directly (not required for Prometheus scraping)
+  ingress {
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -129,7 +136,7 @@ resource "aws_instance" "server" {
     retry curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
 
-    mkdir -p /opt/dumbbudget
+    mkdir -p /opt/dumbbudget/monitoring
     cd /opt/dumbbudget
 
     echo "Checking IAM identity..."
@@ -143,6 +150,21 @@ resource "aws_instance" "server" {
     fi
 
     echo "PIN retrieved successfully."
+
+    # Create Prometheus configuration file
+    cat > monitoring/prometheus.yml <<'PROM_EOF'
+    global:
+      scrape_interval: 15s
+
+    scrape_configs:
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+
+      - job_name: 'node_exporter'
+        static_configs:
+          - targets: ['node_exporter:9100']
+    PROM_EOF
 
     cat > docker-compose.yml <<EOT
     version: "3.8"
@@ -161,6 +183,8 @@ resource "aws_instance" "server" {
         image: prom/prometheus:latest
         ports:
           - "9090:9090"
+        volumes:
+          - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
         restart: always
       grafana:
         image: grafana/grafana:latest
